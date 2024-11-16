@@ -12,6 +12,11 @@ enum Role {
   MEMBER
 }
 
+enum TypeInteraction {
+  LIKE
+  DISLIKE
+}
+
 model User {
   id           String   @id @default(uuid())
   name         String
@@ -20,37 +25,40 @@ model User {
   role         Role     @default(MEMBER)
   createdAt    DateTime @default(now()) @map("created_at")
 
-  comment     Comment[]
-  postHistory PostHistory[]
-  post        Post[]
+  comment          Comment[]
+  postHistory      PostHistory[]
+  post             Post[]
+  PostInteractions PostInteractions[]
 
   @@map("users")
 }
 
 model Post {
   id          String   @id @default(uuid())
+  authorId    String   @map("user_id")
   title       String
   description String
-  views       Decimal?
-  likes       Decimal?
-  dontLike    Decimal? @map("dont_like")
   imageUrl    String?  @map("image_url")
+  views       Int?
+  likes       Int?
+  dislikes    Int?     @map("dont_like")
   createdAt   DateTime @default(now()) @map("created_at")
-  authorId    String   @map("user_id")
 
   author User @relation(fields: [authorId], references: [id])
 
-  comments    Comment[]
-  PostHistory PostHistory[]
+  comments         Comment[]
+  PostHistory      PostHistory[]
+  PostInteractions PostInteractions[]
 
   @@map("posts")
 }
 
 model Comment {
-  id          String @id @default(uuid())
-  authorId    String @map("user_id")
-  postId      String @map("post_id")
+  id          String  @id @default(uuid())
+  authorId    String  @map("user_id")
+  postId      String  @map("post_id")
   description String
+  removed     Boolean @default(false)
 
   user User @relation(fields: [authorId], references: [id])
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
@@ -65,10 +73,27 @@ model PostHistory {
   title       String   @db.VarChar(100)
   description String
   imageUrl    String?  @map("image_url")
+  views       Int?
+  likes       Int?
+  dislikes    Int?     @map("dont_like")
   editedAt    DateTime @default(now())
 
   post Post @relation(fields: [postId], references: [id])
   user User @relation(fields: [authorId], references: [id])
 
   @@map("post_history")
+}
+
+model PostInteractions {
+  id        String          @id @default(uuid())
+  userId    String          @map("user_id")
+  postId    String          @map("post_id")
+  type      TypeInteraction @default(LIKE)
+  viewed    Boolean
+  createdAt DateTime        @default(now())
+
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: NoAction)
+
+  @@unique([userId, postId])
 }

@@ -14,12 +14,14 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 			.min(6, "O título deve ter no mínimo 6 caracteres"),
 		description: z.string(),
 		imageUrl: z.string().default(""),
+		views: z.number().default(0),
+		likes: z.number().default(0),
+		dislikes: z.number().default(0),
 		userId: z.string(),
 	});
 
-	const { id, title, description, imageUrl, userId } = updateBodySchema.parse(
-		request.body,
-	);
+	const { id, title, description, imageUrl, views, likes, dislikes, userId } =
+		updateBodySchema.parse(request.body);
 
 	const post = await prisma.post.findUnique({
 		where: {
@@ -45,6 +47,10 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 			title,
 			description,
 			imageUrl,
+			likes,
+			views,
+			dislikes,
+			authorId: userId,
 		});
 	} catch (error) {
 		if (error instanceof ItemAlreadyExistsError) {

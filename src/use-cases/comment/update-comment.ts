@@ -8,10 +8,12 @@ export class UpdateCommentUseCase {
 	async execute({
 		id,
 		description,
+		removed,
 	}: CommentProps): Promise<CommentCreateResponse> {
 		const comment = await this.commentsRepository.update({
 			id,
 			description,
+			removed,
 		});
 
 		return { comment };

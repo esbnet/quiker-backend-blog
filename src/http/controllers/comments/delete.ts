@@ -25,15 +25,34 @@ export async function deleteComment(
 		return reply.status(404).send({ error: "Comentário não encontrado." });
 	}
 
-	if (comment.authorId !== authorId) {
+	const post = await prisma.post.findUnique({
+		where: {
+			id: comment.postId,
+		},
+	});
+
+	if (!post) {
 		return reply
-			.status(401)
-			.send({ error: "Apenas o autor pode deletar o comment." });
+			.status(404)
+			.send({ error: "Postagem do comentário não existe." });
+	}
+
+	// Se o comentário ou a postagem pertencerem ao autor
+	if (comment.authorId !== authorId || post.authorId !== authorId) {
+		return reply.status(401).send({
+			error:
+				"Apenas o autor do post e do comentário podem deletar o commentário",
+		});
 	}
 
 	try {
-		await prisma.comment.delete({
-			where: { id: commentId },
+		await prisma.comment.update({
+			where: {
+				id: commentId,
+			},
+			data: {
+				removed: true,
+			},
 		});
 	} catch (error) {
 		if (error instanceof CommentNotFoundError) {

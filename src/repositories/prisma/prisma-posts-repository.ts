@@ -1,27 +1,60 @@
-import type { Post, Prisma } from "@prisma/client";
+import type { PostHistoryProps, PostProps } from "@/use-cases/post/post-types";
+import type { Post, PostHistory } from "@prisma/client";
 
 import { prisma } from "@/lib/prisma";
-import type { PostCreateProps } from "@/use-cases/post/post-types";
 import type { PostsRepository } from "../posts-repository";
 
 export class PrismaPostsRepository implements PostsRepository {
+	async createPost(data: PostProps): Promise<Post> {
+		const post = await prisma.post.create({
+			data,
+		});
+
+		return post;
+	}
+
+	async registerOnHirstory(data: PostHistoryProps): Promise<PostHistory> {
+		const postToHistory = {
+			postId: data.postId,
+			authorId: data.authorId,
+			title: data.title,
+			description: data.description,
+			imageUrl: data.imageUrl,
+			views: data.views,
+			likes: data.likes,
+			dislikes: data.dislikes,
+		};
+
+		const historyPost = await prisma.postHistory.create({
+			data: postToHistory,
+		});
+
+		return historyPost;
+	}
+
 	findByAuthorId(id: string): Promise<Post | null> {
 		throw new Error("Method not implemented.");
 	}
 
-	findById(id: string): Promise<Post | null> {
-		throw new Error("Method not implemented.");
+	async findById(id: string): Promise<Post | null> {
+		const post = await prisma.post.findUnique({
+			where: {
+				id,
+			},
+		});
+
+		return post;
 	}
 
 	async delete(id: string) {
-		const post = prisma.post.delete({
+		await prisma.post.delete({
 			where: {
 				id,
 			},
 		});
 	}
 
-	async update(data: Prisma.PostCreateInput): Promise<Post> {
+	async update(data: PostProps): Promise<Post> {
 		const post = prisma.post.update({
 			where: {
 				id: data.id,
@@ -29,9 +62,7 @@ export class PrismaPostsRepository implements PostsRepository {
 			data,
 		});
 
-		return post.then((post) => {
-			return post;
-		});
+		return post;
 	}
 
 	async findByUserId(postId: string) {
@@ -39,15 +70,6 @@ export class PrismaPostsRepository implements PostsRepository {
 			where: {
 				id: postId,
 			},
-		});
-
-		return post;
-	}
-
-	async createPost(data: PostCreateProps): Promise<Post> {
-		await console.log("DADOS DO POST: ", data);
-		const post = await prisma.post.create({
-			data,
 		});
 
 		return post;

@@ -1,21 +1,25 @@
 import type { Post } from "@prisma/client";
 
-export interface PostCreateProps {
+export interface PostProps {
 	id?: string;
-	title: string;
-	description: string;
-	authorId: string;
+	authorId?: string;
+	title?: string;
+	description?: string;
 	imageUrl?: string;
-	views?: number;
-	likes?: number;
-	dontLike?: number;
+	views?: number | null;
+	likes?: number | null;
+	dislikes?: number | null;
 }
 
-export interface PostUpdateProps {
-	id?: string;
-	title: string;
-	description: string;
+export interface PostHistoryProps {
+	postId: string;
+	authorId: string;
+	title?: string;
+	description?: string;
 	imageUrl?: string;
+	views?: number | null;
+	likes?: number | null;
+	dislikes?: number | null;
 }
 
 export interface PostCreateResponse {
