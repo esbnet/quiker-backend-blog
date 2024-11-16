@@ -5,6 +5,7 @@ export interface CommentProps {
 	authorId?: string;
 	postId?: string;
 	description: string;
+	removed?: boolean;
 }
 
 export interface CommentCreateResponse {

@@ -1,12 +1,10 @@
-import type { Comment, Prisma } from "@prisma/client";
-
 import { prisma } from "@/lib/prisma";
 import type { CommentProps } from "@/use-cases/comment/comment-types";
+import type { Comment } from "@prisma/client";
 import type { CommentsRepository } from "../comments-repository";
 
 export class PrismaCommentsRepository implements CommentsRepository {
 	async createComment(data: CommentProps): Promise<Comment> {
-		console.log("DADOS DO COMMENT: ", data);
 		const comment = await prisma.comment.create({
 			data,
 		});
@@ -30,10 +28,12 @@ export class PrismaCommentsRepository implements CommentsRepository {
 		});
 	}
 
-	async update(data: Prisma.CommentCreateInput): Promise<Comment> {
+	async update(data: CommentProps): Promise<Comment> {
 		const comment = await prisma.comment.update({
 			where: {
 				id: data.id,
+				description: data.description,
+				removed: data.removed,
 			},
 			data,
 		});

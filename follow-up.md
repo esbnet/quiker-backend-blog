@@ -27,7 +27,7 @@
   IV. <del>delete</del>
   a. <del>só dono pode excluir ou editar</del>
   b. adicionar imagem na postagem
-  c. salvar edições em históricos
+  c. <del>salvar edições em históricos</del>
   d. contador de views
   e. contador de likes e dislikes
 
@@ -40,7 +40,7 @@
   IV. <del>delete</del>
 
   a. <del>só o dono pode editar ou excluir</del>
-  b. dono pode remover
+  b. <del>dono do post pode remover comentário</del>
   d. adicionar marcador que foi removido (dono/usuário)
   e. enviar email para o dono sobre novo comentário
 
