@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+model User {
+  id           String   @id @default(uuid())
+  name         String
+  email        String   @unique
+  passwordHash String   @map("password_hash")
+  role         Role     @default(MEMBER)
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  comment     Comment[]
+  postHistory PostHistory[]
+  post        Post[]
+
+  @@map("users")
+}
+
+model Post {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  views       Decimal?
+  likes       Decimal?
+  dontLike    Decimal? @map("dont_like")
+  imageUrl    String?  @map("image_url")
+  createdAt   DateTime @default(now()) @map("created_at")
+  authorId    String   @map("user_id")
+
+  author User @relation(fields: [authorId], references: [id])
+
+  comments    Comment[]
+  PostHistory PostHistory[]
+
+  @@map("posts")
+}
+
+model Comment {
+  id          String @id @default(uuid())
+  authorId    String @map("user_id")
+  postId      String @map("post_id")
+  description String
+
+  user User @relation(fields: [authorId], references: [id])
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@map("comments")
+}
+
+model PostHistory {
+  id          String   @id @default(uuid())
+  postId      String   @map("post_id")
+  authorId    String   @map("user_id")
+  title       String   @db.VarChar(100)
+  description String
+  imageUrl    String?  @map("image_url")
+  editedAt    DateTime @default(now())
+
+  post Post @relation(fields: [postId], references: [id])
+  user User @relation(fields: [authorId], references: [id])
+
+  @@map("post_history")
+}
