@@ -7,7 +7,7 @@ import { z } from "zod";
 
 export async function update(request: FastifyRequest, reply: FastifyReply) {
 	const updateBodySchema = z.object({
-		id: z.string().uuid(),
+		id: z.string().cuid(),
 		title: z
 			.string()
 			.max(100, "O título deve ter no máximo 100 caracteres")
@@ -17,7 +17,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 		views: z.number().default(0),
 		likes: z.number().default(0),
 		dislikes: z.number().default(0),
-		userId: z.string(),
+		userId: z.string().optional(),
 	});
 
 	const { id, title, description, imageUrl, views, likes, dislikes, userId } =
@@ -36,7 +36,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 	if (post.authorId !== userId) {
 		return reply
 			.status(401)
-			.send({ error: "Apenas o autor pode deletar o post." });
+			.send({ error: `Apenas o autor pode alterar o post.${userId}` });
 	}
 
 	try {
