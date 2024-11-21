@@ -23,16 +23,17 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
 
 	const { name, email, password } = registerBodySchema.parse(request.body);
 
+
 	try {
 		const registerUseCase = makeRegisterUseCase();
 
 		await registerUseCase.execute({ name, email, password });
 	} catch (error) {
 		if (error instanceof ItemAlreadyExistsError) {
-			return reply.status(409).send({ error: error.message });
+			return reply.status(409).send({status: 409, error: error.message });
 		}
 		throw error; // TODO: fix me
 	}
 
-	return reply.status(201).send();
+	return reply.status(201).send({status: 201, message:'Usuário cadastrado com sucesso. 👌'});
 }

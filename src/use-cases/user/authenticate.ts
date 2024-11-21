@@ -27,7 +27,7 @@ export class AuthenticateUseCase {
 
 		const doesPasswordMatch = await bcrypt.compare(
 			password,
-			user.password_hash,
+			user.passwordHash,
 		);
 
 		if (!doesPasswordMatch) {

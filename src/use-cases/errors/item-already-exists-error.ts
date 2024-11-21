@@ -1,5 +1,5 @@
 export class ItemAlreadyExistsError extends Error {
 	constructor() {
-		super("Item já cadastrado. 🤦‍♂️");
+		super("Registro já existe. 🤦‍♂️");
 	}
 }
