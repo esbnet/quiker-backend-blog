@@ -7,13 +7,13 @@ Para utilizá-lo, basta registrar-se no aplicativo e já será hapto a realizar 
 
 ## Techs
 
-- Typescript 5.1
+- Typescript - 5.1 - Typagem, Segurança e Produtividade
 - Fastify - 4.21
-- Prisma - 5.22
-- Zod - 3.21
-- Eslint - 8.46
-- Vitest 0.33
-- Supertest - 6.3
+- Prisma - 5.22 - ORM que otimiza o processo de criação do DB e manipulação de dados
+- Zod - 3.21 - Lib para falidação e transformação de dados baseado em Schema
+- Eslint - 8.46 - Análise estático de código TypeScript - conformidade e legibilidade
+- Vitest 0.33 - Testes unitários
+- Supertest - 6.3 - Testes de integração E2E
 
 ## Pré-requisitos
 
@@ -55,4 +55,4 @@ Com todo o ambiente devidamente configurado, rode o comando abaixo e teremos nos
 npm run start:dev
 ```
 
-### Endoins
+### Endpoins
