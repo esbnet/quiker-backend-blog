@@ -1,32 +1,32 @@
 # Quiker Artigos
+(API)
 
 Esta aplicação se propõe a ser um site de notícias compartilhado. Nele qualquer pesso podera se cadastrar e criar artigos que ficaram disponíveis ao público da internet. 
 
 Para utilizá-lo, basta registrar-se no aplicativo e já será hapto a realizar postage, commentários em postagens de terceiros e dar manutenção em seus próprios comentários, como excluír, por exemplo.
 
-
-
 ## Techs
 
-- React - 18.3 - Linguagem de programação
-- Next - 15.0 - Framework para melhor desempenho, CEO
-- Typescript - 4.5 - Typagem, Segurança e Produtividade
-- Prisma - ORM que otimiza o processo de criação do DB e manipulação de dados
-- Axios - 1.7 - Gerenciar requisiçõe HTTP 
-- Tailwind Css - 3.3 - Framework de estilo CSS poderoso, flexível e rápido
-- Jest - Framework para testes unitários
+- Typescript 5.1
+- Fastify - 4.21
+- Prisma - 5.22
+- Zod - 3.21
+- Eslint - 8.46
+- Vitest 0.33
+- Supertest - 6.3
 
 ## Pré-requisitos
 
 - Node (20.0 - utilizado)
 - Genrenciador de pacotes (npm, pnpm, yarn)
-- Back-end em execução (https://github.com/esbnet/quiker-backend-blog)
+- Gerenciador de Banco de Dados
 - Configurar banco de dados
-
 
 ## Impantação
 
-- Clonar projeto 
+### Clonar projeto 
+
+Em uma pasta no seu ambiente, clone o projeto com o comando:
 
 ``` 
 git clone https://github.com/esbnet/quiker-backend-blog.git 
@@ -36,40 +36,23 @@ git clone https://github.com/esbnet/quiker-backend-blog.git
 npm install
 ```
 
-- Configurar ambiente
-Criar um arquivo .env na pasta raíz do projeto e inserir a variável de ambiente abaixo:
+### Configurar ambiente
+Criar um arquivo .env na pasta raíz do projeto e inserir as variáveis de ambiente abaixo:
 (ver modelo na pasta root, arquivo env.sample) 
+Define o ambiente de execução, a porta onde a API irá rodar, a string de conexção com o db e uma string quer servirá de base para gerar o JWT na amplicação, respectivamente.
+(estamos utilizando postgress - [ver documentação do prisma](https://www.prisma.io/docs/getting-started/quickstart-prismaPostgres))
+
+### Criar tabelas no banco de dados
+Após criação do banco e configuração da string de conexão iremos rodar o comando. Altamente recomendado consultar a documetação do desenvolvedor [aqui](https://www.prisma.io/docs/getting-started/quickstart-prismaPostgres).
+
 ```
-NEXT_PUBLIC_API_URL="http://localhost:3333"
+npx prisma migrate dev --name init
+```
+### Rodando a API
+
+Com todo o ambiente devidamente configurado, rode o comando abaixo e teremos nossa api executando e pronta pra receber requisições.
+```
+npm run start:dev
 ```
 
-## Rodar o projeto
-
-Após providenciar os pré-requisitos, na pasta root, digite o comando abaixo:
-```
-npm run dev
-```
-
-Após realizar todos os procedimentos, aparecerá a página inicial:
-
-Para realizar comentários é necessário se registrar e fazer login no site.
-
-<p float="left">
- <img src="https://github.com/esbnet/quiker-frontend-blog/blob/main/src/assets/doc/inicial.jpeg?raw=true" width="700" />
-</p>
-
-## Registro
-<p float="left">
- <img src="https://github.com/esbnet/quiker-frontend-blog/blob/main/src/assets/doc/registro.jpeg?raw=true" width="700" />
-</p>
-
-## Entrar
-<p float="left">
- <img src="https://github.com/esbnet/quiker-frontend-blog/blob/main/src/assets/doc/login.jpeg?raw=true" width="700" />
-</p>
-
-## Tela de um Post
-<p float="left">
- <img src="https://github.com/esbnet/quiker-frontend-blog/blob/main/src/assets/doc/post.jpeg?raw=true" width="700" />
-</p>
-
+### Endoins
