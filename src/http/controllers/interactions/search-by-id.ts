@@ -11,7 +11,7 @@ export async function searchPostById(
 		id: z.string(),
 	});
 
-	const { id } = request.body as { id: string };
+	const { id } = request.params as { id: string };
 
 	const post = await prisma.post.findUnique({
 		where: { id },

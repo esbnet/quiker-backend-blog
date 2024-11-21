@@ -4,6 +4,13 @@ import { prisma } from "@/lib/prisma";
 import type { UsersRepository } from "../users-repository";
 
 export class PrismaUsersRepository implements UsersRepository {
+
+	async create(data: Prisma.UserCreateInput) {
+		const user = prisma.user.create({ data });
+
+		return user;
+	}
+
 	async delete(id: string) {
 		const user = prisma.user.delete({
 			where: { id },
@@ -37,9 +44,4 @@ export class PrismaUsersRepository implements UsersRepository {
 		return user;
 	}
 
-	async create(data: Prisma.UserCreateInput) {
-		const user = prisma.user.create({ data });
-
-		return user;
-	}
 }

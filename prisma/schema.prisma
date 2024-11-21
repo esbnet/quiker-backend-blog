@@ -18,7 +18,7 @@ enum TypeInteraction {
 }
 
 model User {
-  id           String   @id @default(uuid())
+  id           String   @id @default(cuid())
   name         String
   email        String   @unique
   passwordHash String   @map("password_hash")
@@ -34,14 +34,14 @@ model User {
 }
 
 model Post {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   authorId    String   @map("user_id")
   title       String
   description String
   imageUrl    String?  @map("image_url")
   views       Int?
-  likes       Int?
-  dislikes    Int?     @map("dont_like")
+  likes       Int      @default(0)
+  dislikes    Int      @default(0)
   createdAt   DateTime @default(now()) @map("created_at")
 
   author User @relation(fields: [authorId], references: [id])
@@ -54,11 +54,12 @@ model Post {
 }
 
 model Comment {
-  id          String  @id @default(uuid())
-  authorId    String  @map("user_id")
-  postId      String  @map("post_id")
+  id          String   @id @default(cuid())
+  authorId    String   @map("user_id")
+  postId      String   @map("post_id")
   description String
-  removed     Boolean @default(false)
+  removed     Boolean  @default(false)
+  createdAt   DateTime @default(now()) @map("created_at")
 
   user User @relation(fields: [authorId], references: [id])
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
@@ -67,15 +68,15 @@ model Comment {
 }
 
 model PostHistory {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   postId      String   @map("post_id")
   authorId    String   @map("user_id")
-  title       String   @db.VarChar(100)
+  title       String
   description String
   imageUrl    String?  @map("image_url")
   views       Int?
   likes       Int?
-  dislikes    Int?     @map("dont_like")
+  dislikes    Int?
   editedAt    DateTime @default(now())
 
   post Post @relation(fields: [postId], references: [id])
@@ -85,11 +86,13 @@ model PostHistory {
 }
 
 model PostInteractions {
-  id        String          @id @default(uuid())
+  id        String          @id @default(cuid())
   userId    String          @map("user_id")
   postId    String          @map("post_id")
   type      TypeInteraction @default(LIKE)
   viewed    Boolean
+  likes     Int?
+  dislikes  Int?
   createdAt DateTime        @default(now())
 
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
