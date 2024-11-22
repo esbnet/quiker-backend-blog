@@ -17,8 +17,6 @@ export async function deleteUser(request: FastifyRequest, reply: FastifyReply) {
 		where: { email },
 	});
 
-	console.log("USUÁRIO ENCONTRADO NO BANCO:  ", user);
-
 	if (!user) {
 		return reply.status(404).send({ error: "User not found" });
 	}
