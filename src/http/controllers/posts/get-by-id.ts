@@ -13,14 +13,12 @@ export async function getPostById(
 
 	const { id } = getPostByIdBodySchema.parse(request.body);
 
-	console.log("==========> parametro que chegou no servidor", id)
-
 	const post = await prisma.post.findUnique({
 		where: { id },
 		include: {
 			author: true,
-			comments: true,			
-		}
+			comments: true,
+		},
 	});
 
 	return reply.send(post);
