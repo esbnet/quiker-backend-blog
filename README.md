@@ -60,10 +60,7 @@ npm run start:dev
 #### User
 ##### Create User
 ```
-POST
-
-/register
-
+POST /register
 payload:
 {
 	"name":"João dos Santos",
@@ -79,10 +76,7 @@ response:
 ```
 ##### Autenticação
 ```
-POST
-
-/sessions
-
+POST /sessions
 payload:
 {
 	"email":"esbnet@gmail.com.pa",
@@ -104,10 +98,7 @@ response:
 ```
 ##### List Usuários
 ```
-GET
-
-/users
-
+GET /users
 payload:
 
 response:
@@ -133,10 +124,7 @@ response:
 
 ##### Deleta Usuário
 ```
-DELETE
-
-/user
-
+DELETE /user
 payload:
 {
 	"email": "esbnet@gmail.com"
@@ -147,10 +135,7 @@ Usuário esbnet@gmail.com deletado com sucesso!
 ```
 ##### Editar Usuário
 ```
-PUT
-
-/user
-
+PUT /user
 payload:
 {
 	"id":"df69bdab-2948-4bac-be73-be8a701bef61",
@@ -164,10 +149,7 @@ Usuário atualizado com sucesso!
 ```
 ##### Localizar Por Email
 ```
-POST
-
-/user
-
+POST /user
 payload:
 {
   	"email":"esbnet2@gmail.com",
@@ -187,10 +169,7 @@ response:
 #### Post
 ##### Criar Post
 ```
-POST
-
-/post/new
-
+POST /post/new
 payload:
 {
 	"title": "Javascript - A linguagem que revolucionou a internet",
@@ -216,10 +195,7 @@ response:
 
 ##### List Posts
 ```
-GET
-
-/posts
-
+GET /posts
 payload:
 
 response:
@@ -266,12 +242,9 @@ response:
 ```
 ##### List Posts
 ```
-GET
-
-/report
+GET /report
 
 payload:
-
 response:
 [
 	{
@@ -305,7 +278,6 @@ Usuário esbnet@gmail.com deletado com sucesso!
 ##### Editar Post
 ```
 PUT /post
-
 payload:
 {
 	"id":"894bb68f-da55-4b92-948c-b8ec1f351847",
@@ -324,7 +296,6 @@ Erro:
 ##### Localizar Por Post id
 ```
 POST /post
-
 payload:
 {
 	"id":"cm3ru7tov000fks1q82f4f275"
@@ -374,7 +345,6 @@ response:
 ##### Criar Comentário
 ```
 POST /comment/new
-
 payload:
 {
 	"authorId": "cm3qihwix0000y7f7ydgc4n1p",
@@ -397,7 +367,6 @@ response: 201
 GET /commnets
 
 payload:
-
 response: 200
 [
 	{
@@ -433,7 +402,6 @@ Commentário "2b5dfb63-1dfb-40c5-b9c6-a06156553bfc" deletado com sucesso!
 ##### Editar Commentário
 ```
 PUT /comment
-
 payload:
 {
 	"id":"cm3ru83w7000hks1qeg9avdvz",
@@ -453,7 +421,6 @@ Erro:
 ##### Localizar Por id do Comentário
 ```
 POST /comment
-
 payload:
 {
 	"id": "cm3ru83w7000hks1qeg9avdvz"
@@ -472,7 +439,6 @@ response:
 ##### Localizar Por id do Post
 ```
 POST /comments
-
 payload:
 {
 	"id": "cm3ru7tov000fks1q82f4f275"
@@ -518,7 +484,6 @@ response:
 ##### Criar Interação
 ```
 POST /interaction/new
-
 payload:
 {
 	"id":"id da interação",
@@ -534,7 +499,6 @@ response: 201
 ##### Alternar Interação
 ```
 PUT /interaction
-
 payload:
 {
 	"id":"id da interação",
@@ -550,7 +514,6 @@ Interação alternada com sucesso
 ##### Lista Interação por usuário
 ```
 GET /interactions/[user]/[id]
-
 payload:
 
 response: 200
@@ -560,7 +523,6 @@ response: 200
 ##### Lista Interação por usuário
 ```
 GET /interactions/[post]/[id]
-
 payload:
 
 response: 200
