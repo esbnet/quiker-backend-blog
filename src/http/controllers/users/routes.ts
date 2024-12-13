@@ -13,7 +13,7 @@ export async function usersRoutes(app: FastifyInstance) {
 	app.post("/register", register);
 	app.get("/users", list);
 	app.post("/user", searchUserById);
-	app.put("/user", update);
+	app.patch("/user", update);
 	app.delete("/user", deleteUser);
 
 	app.post("/sessions", authenticate);
