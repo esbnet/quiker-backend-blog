@@ -35,5 +35,5 @@ export async function register(request: FastifyRequest, reply: FastifyReply) {
 		throw error; // TODO: fix me
 	}
 
-	return reply.status(201).send({status: 201, message:'Usuário cadastrado com sucesso. 👌'});
+	return reply.status(201).send({status: 201, message:'Usuário cadastrado com sucesso.'});
 }

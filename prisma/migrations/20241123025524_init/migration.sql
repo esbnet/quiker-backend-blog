@@ -24,6 +24,8 @@ CREATE TABLE "posts" (
     "description" TEXT NOT NULL,
     "image_url" TEXT,
     "views" INTEGER,
+    "likes" INTEGER NOT NULL DEFAULT 0,
+    "dislikes" INTEGER NOT NULL DEFAULT 0,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "posts_pkey" PRIMARY KEY ("id")

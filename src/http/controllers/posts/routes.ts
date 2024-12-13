@@ -12,7 +12,7 @@ export async function postsRoutes(app: FastifyInstance) {
 	app.post("/post", getPostById);
 	app.put("/post", update);
 	app.delete("/post", deletePost);
-	app.post("/post/view/:id", views);
+	app.patch("/post/view/:id", views);
 	app.get("/posts", list);
 	app.get("/report", report);
 }
