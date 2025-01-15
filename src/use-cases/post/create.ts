@@ -8,20 +8,20 @@ export class CreatePostUseCase {
 	async execute({
 		authorId,
 		title,
-		description,
+		content,
 		imageUrl,
 		views = 0,
-		likes = 0,
-		dislikes = 0,
+		likesCount = 0,
+		dislikesCount = 0,
 	}: PostProps): Promise<PostCreateResponse> {
 		const post = await this.postsRepository.createPost({
 			authorId,
 			title,
-			description,
+			content,
 			imageUrl,
 			views,
-			likes,
-			dislikes
+			likesCount,
+			dislikesCount,
 		});
 
 		return { post };

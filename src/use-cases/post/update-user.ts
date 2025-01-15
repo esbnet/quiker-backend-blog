@@ -8,11 +8,11 @@ export class UpdatePostUseCase {
 	async execute({
 		id,
 		title,
-		description,
+		content,
 		imageUrl,
 		views,
-		likes,
-		dislikes,
+		likesCount,
+		dislikesCount,
 	}: PostProps): Promise<PostCreateResponse> {
 		const oldPost = await this.postsRepository.findById(id as string);
 
@@ -22,11 +22,11 @@ export class UpdatePostUseCase {
 				postId: oldPost.id,
 				authorId: oldPost.authorId,
 				title: oldPost.title,
-				description: oldPost.description,
+				content: oldPost.content,
 				imageUrl: oldPost.imageUrl || "",
 				views: oldPost.views,
-				likes: oldPost.likes,
-				dislikes: oldPost.dislikes,
+				likesCount: oldPost.likesCount,
+				dislikesCount: oldPost.dislikesCount,
 			});
 		}
 
@@ -34,11 +34,11 @@ export class UpdatePostUseCase {
 		const post = await this.postsRepository.update({
 			id,
 			title,
-			description,
+			content,
 			imageUrl,
 			views,
-			likes,
-			dislikes,
+			likesCount,
+			dislikesCount,
 			authorId: oldPost?.authorId as string,
 		});
 

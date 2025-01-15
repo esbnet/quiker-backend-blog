@@ -10,7 +10,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 			.string()
 			.max(100, "O título deve ter no máximo 100 caracteres")
 			.min(6, "O título deve ter no mínimo 6 caracteres"),
-		description: z.string(),
+		content: z.string(),
 		authorId: z.string(),
 		views: z.number().default(0),
 		likes: z.number().default(0),
@@ -19,7 +19,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
 	const {
 		title,
-		description,
+		content,
 		authorId,
 		views = 0,
 		likes = 0,
@@ -31,7 +31,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
 		const { post } = await createUseCase.execute({
 			title,
-			description,
+			content,
 			authorId,
 			views,
 			likes,

@@ -19,7 +19,7 @@ export async function likes(request: FastifyRequest, reply: FastifyReply) {
 	try {
 		const post = await prisma.post.update({
 			where: { id },
-			data: { likes: { increment: 1 } },
+			data: { likesCount: { increment: 1 } },
 		});
 
 		return reply.status(200).send("Like registrada com sucesso!");

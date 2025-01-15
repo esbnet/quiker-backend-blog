@@ -20,7 +20,7 @@ describe("Post Use Case", () => {
 
 		const { post } = await PostsRepository.execute({
 			title: "Meu primeiro post",
-			description:
+			content:
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl vel",
 			authorId: "ef08a6ca-e8b4-4a45-bc34-9f810f9afec0",
 		});
@@ -33,7 +33,7 @@ describe("Post Use Case", () => {
 
 		await sut.execute({
 			title: "Meu primeiro post",
-			description:
+			content:
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl vel",
 			authorId: "ef08a6ca-e8b4-4a45-bc34-9f810f9afec0",
 		});
@@ -41,7 +41,7 @@ describe("Post Use Case", () => {
 		await expect(() =>
 			sut.execute({
 				title: "Meu primeiro post",
-				description:
+				content:
 					"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl vel",
 				authorId: "ef08a6ca-e8b4-4a45-bc34-9f810f9afec0",
 			}),

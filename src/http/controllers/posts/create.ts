@@ -11,21 +11,21 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 			.string()
 			.max(100, "O título deve ter no máximo 100 caracteres")
 			.min(6, "O título deve ter no mínimo 6 caracteres"),
-		description: z.string(),
+		content: z.string(),
 		imageUrl: z.string(),
 		views: z.number().default(0),
-		likes: z.number().default(0),
-		dislikes: z.number().default(0),
+		likesCount: z.number().default(0),
+		dislikesCount: z.number().default(0),
 	});
 
 	const {
 		authorId,
 		title,
-		description,
+		content,
 		imageUrl,
 		views = 0,
-		likes = 0,
-		dislikes = 0,
+		likesCount = 0,
+		dislikesCount = 0,
 	} = createBodySchema.parse(request.body);
 
 	try {
@@ -33,12 +33,12 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 
 		const { post } = await createUseCase.execute({
 			title,
-			description,
+			content,
 			authorId,
 			imageUrl,
 			views,
-			likes,
-			dislikes,
+			likesCount,
+			dislikesCount,
 		});
 
 		return reply.status(201).send(post);
