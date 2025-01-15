@@ -5,6 +5,7 @@ import fastify from "fastify";
 import { ZodError } from "zod";
 import { env } from "./env";
 import { comentsRoutes } from "./http/controllers/comments/routes";
+import { likesRoutes } from "./http/controllers/likes/routes";
 import { postsRoutes } from "./http/controllers/posts/routes";
 import { usersRoutes } from "./http/controllers/users/routes";
 
@@ -31,6 +32,7 @@ app.register(cookie);
 app.register(usersRoutes);
 app.register(postsRoutes);
 app.register(comentsRoutes);
+app.register(likesRoutes);
 
 app.setErrorHandler((error, _, reply) => {
 	if (error instanceof ZodError) {

@@ -4,22 +4,22 @@ export interface PostProps {
 	id?: string;
 	authorId?: string;
 	title?: string;
-	description?: string;
+	content?: string;
 	imageUrl?: string;
 	views?: number | null;
-	likes?: number | null;
-	dislikes?: number | null;
+	likesCount?: number | null;
+	dislikesCount?: number | null;
 }
 
 export interface PostHistoryProps {
 	postId: string;
 	authorId: string;
 	title?: string;
-	description?: string;
+	content?: string;
 	imageUrl?: string;
 	views?: number | null;
-	likes?: number | null;
-	dislikes?: number | null;
+	likesCount?: number | null;
+	dislikesCount?: number | null;
 }
 
 export interface PostCreateResponse {

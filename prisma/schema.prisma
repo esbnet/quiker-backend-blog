@@ -29,33 +29,50 @@ model User {
   postHistory      PostHistory[]
   post             Post[]
   PostInteractions PostInteractions[]
+  like             Like[]
 
   @@map("users")
 }
 
 model Post {
-  id          String   @id @default(cuid())
-  authorId    String   @map("user_id")
-  title       String
-  description String
-  imageUrl    String?  @map("image_url")
-  views       Int?
-  likes       Int      @default(0)
-  dislikes    Int      @default(0)
-  createdAt   DateTime @default(now()) @map("created_at")
+  id            String   @id @default(cuid())
+  authorId      String   @default("") @map("author_id")
+  title         String
+  content       String
+  imageUrl      String?  @map("image_url")
+  views         Int      @default(0)
+  likesCount    Int      @default(0)
+  dislikesCount Int      @default(0)
+  createdAt     DateTime @default(now()) @map("created_at")
 
   author User @relation(fields: [authorId], references: [id])
 
   comments         Comment[]
   PostHistory      PostHistory[]
   PostInteractions PostInteractions[]
+  likes            Like[]
 
   @@map("posts")
 }
 
+model Like {
+  id        String   @id @default(cuid())
+  authorId  String   @map("author_id")
+  postId    String   @map("post_id")
+  like      Boolean  @default(false)
+  dislike   Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([authorId, postId])
+  @@map("like")
+}
+
 model Comment {
   id          String   @id @default(cuid())
-  authorId    String   @map("user_id")
+  authorId    String   @map("author_id")
   postId      String   @map("post_id")
   description String
   removed     Boolean  @default(false)
@@ -70,7 +87,7 @@ model Comment {
 model PostHistory {
   id          String   @id @default(cuid())
   postId      String   @map("post_id")
-  authorId    String   @map("user_id")
+  authorId    String   @map("author_id")
   title       String
   description String
   imageUrl    String?  @map("image_url")
@@ -87,7 +104,7 @@ model PostHistory {
 
 model PostInteractions {
   id        String          @id @default(cuid())
-  userId    String          @map("user_id")
+  authorId  String          @map("author_id")
   postId    String          @map("post_id")
   type      TypeInteraction @default(LIKE)
   viewed    Boolean
@@ -96,7 +113,8 @@ model PostInteractions {
   createdAt DateTime        @default(now())
 
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user User @relation(fields: [userId], references: [id], onDelete: NoAction)
+  user User @relation(fields: [authorId], references: [id], onDelete: NoAction)
 
-  @@unique([userId, postId])
+  @@unique([authorId, postId])
+  @@map("post_interactions")
 }
