@@ -3,7 +3,7 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
-export async function searchLikeByPostIdAndAuthotId(
+export async function searchLike(
 	request: FastifyRequest,
 	reply: FastifyReply,
 ) {
