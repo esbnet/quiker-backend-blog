@@ -1,11 +1,12 @@
 {
-  "name": "03-api-solid",
+  "name": "blog-api-solid",
   "version": "1.0.0",
-  "description": "GymPass style app.",
+  "description": "Blog API solid",
+  "author": "Edmilson Soares",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start:dev": "tsx watch src/server.ts ",
+    "start:dev": "tsx watch src/server.ts --trace-warnings ",
     "start": "node build/server.js",
     "test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
     "test:install-prisma-environment": "npm link vitest-environment-prisma",
@@ -17,26 +18,27 @@
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "@fastify/cookie": "9.0.4",
     "@fastify/cors": "8.3.0",
     "@fastify/jwt": "7.2.0",
-    "@prisma/client": "^5.22.0",
     "bcryptjs": "2.4.3",
     "bson": "^6.9.0",
     "dayjs": "1.11.9",
     "dotenv": "16.3.1",
     "fastify": "4.21.0",
-    "mongodb": "^6.10.0",
     "npm-run-all": "4.1.5",
     "vite-tsconfig-paths": "4.2.0",
     "vitest": "0.33.0",
     "zod": "3.21.4"
   },
   "devDependencies": {
+    "@prisma/client": "^6.2.1",
     "@rocketseat/eslint-config": "2.1.0",
     "@types/bcryptjs": "2.4.2",
     "@types/node": "20.4.6",
@@ -48,10 +50,11 @@
     "eslint-plugin-import": "2.28.0",
     "eslint-plugin-n": "16.0.1",
     "eslint-plugin-promise": "6.1.1",
-    "prisma": "^5.22.0",
+    "prisma": "^6.2.1",
     "supertest": "6.3.3",
+    "ts-node": "^10.9.2",
     "tsup": "7.2.0",
-    "tsx": "3.12.7",
+    "tsx": "4.19.2",
     "typescript": "5.1.6"
   }
 }

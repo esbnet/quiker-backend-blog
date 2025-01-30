@@ -40,5 +40,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 		throw error; // TODO: fix me
 	}
 
-	return reply.status(204).send(`Usuário ${email} atualizado com sucesso!`);
+	return reply.status(200).send({message:`Usuário ${email} atualizado com sucesso!`, user:{
+		id, name, email
+	}});
 }

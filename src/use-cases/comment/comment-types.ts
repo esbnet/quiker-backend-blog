@@ -4,7 +4,7 @@ export interface CommentProps {
 	id?: string;
 	authorId?: string;
 	postId?: string;
-	description: string;
+	content: string;
 	removed?: boolean;
 }
 

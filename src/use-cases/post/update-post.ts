@@ -1,6 +1,5 @@
-import type { PostCreateResponse, PostProps } from "./post-types";
-
 import type { PostsRepository } from "@/repositories/posts-repository";
+import type { PostCreateResponse, PostProps } from "./post-types";
 
 export class UpdatePostUseCase {
 	constructor(private postsRepository: PostsRepository) {}
@@ -8,7 +7,7 @@ export class UpdatePostUseCase {
 	async execute({
 		id,
 		title,
-		description,
+		content,
 		imageUrl,
 		views,
 		likes,
@@ -22,19 +21,20 @@ export class UpdatePostUseCase {
 				postId: oldPost.id,
 				authorId: oldPost.authorId,
 				title: oldPost.title,
-				description: oldPost.description,
+				content: oldPost.content,
 				imageUrl: oldPost.imageUrl || "",
 				views: oldPost.views,
 				likes: oldPost.likes,
 				dislikes: oldPost.dislikes,
+				
 			});
 		}
 
 		// atualiza post
 		const post = await this.postsRepository.update({
-			id,
+			id, 
 			title,
-			description,
+			content,
 			imageUrl,
 			views,
 			likes,

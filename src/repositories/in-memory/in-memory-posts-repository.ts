@@ -1,18 +1,14 @@
-import type {
-	PostCreateProps,
-	PostHistoryCreateProps,
-} from "@/use-cases/post/post-types";
 import type { Post, PostHistory, Prisma } from "@prisma/client";
 
 import type { PostsRepository } from "../posts-repository";
 
 export class InMemoryPostsRepository implements PostsRepository {
-	registerOnHirstory(
-		data: PostHistoryCreateProps,
-	): Promise<PostHistory | null> {
-		throw new Error("Method not implemented."); // TODO
+	registerOnHirstory(data: PostHistory): Promise<PostHistory | null> {
+		throw new Error("Method not implemented.");
 	}
-	createPost(data: PostCreateProps): Promise<Post> {
+	
+
+	createPost(data: Prisma.PostCreateInput): Promise<Post> {
 		throw new Error("Method not implemented."); // TODO
 	}
 

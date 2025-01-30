@@ -32,7 +32,7 @@ export class PrismaCommentsRepository implements CommentsRepository {
 		const comment = await prisma.comment.update({
 			where: {
 				id: data.id,
-				description: data.description,
+				content: data.content,
 				removed: data.removed,
 			},
 			data,

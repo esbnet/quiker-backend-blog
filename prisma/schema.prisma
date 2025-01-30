@@ -29,74 +29,92 @@ model User {
   postHistory      PostHistory[]
   post             Post[]
   PostInteractions PostInteractions[]
+  like             Like[]
 
   @@map("users")
 }
 
 model Post {
-  id          String   @id @default(cuid())
-  authorId    String   @map("user_id")
-  title       String
-  description String
-  imageUrl    String?  @map("image_url")
-  views       Int?
-  likes       Int      @default(0)
-  dislikes    Int      @default(0)
-  createdAt   DateTime @default(now()) @map("created_at")
+  id        String   @id @default(cuid())
+  authorId  String   @default("") @map("author_id")
+  title     String
+  content   String
+  imageUrl  String?  @map("image_url")
+  views     Int      @default(0)
+  likes     Int      @default(0)
+  dislikes  Int      @default(0)
+  createdAt DateTime @default(now()) @map("created_at")
 
-  author User @relation(fields: [authorId], references: [id])
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   comments         Comment[]
   PostHistory      PostHistory[]
   PostInteractions PostInteractions[]
+  likesOnPost      Like[]
 
   @@map("posts")
 }
 
-model Comment {
-  id          String   @id @default(cuid())
-  authorId    String   @map("user_id")
-  postId      String   @map("post_id")
-  description String
-  removed     Boolean  @default(false)
-  createdAt   DateTime @default(now()) @map("created_at")
+model Like {
+  id        String   @id @default(cuid())
+  authorId  String   @map("author_id")
+  postId    String   @map("post_id")
+  like      Boolean  @default(false)
+  dislike   Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
 
-  user User @relation(fields: [authorId], references: [id])
+  user User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@unique([authorId, postId])
+  @@map("likes")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  authorId  String   @map("author_id")
+  postId    String   @map("post_id")
+  content   String
+  removed   Boolean  @default(false)
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [authorId], references: [id], onDelete: Cascade)
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@map("comments")
 }
 
 model PostHistory {
-  id          String   @id @default(cuid())
-  postId      String   @map("post_id")
-  authorId    String   @map("user_id")
-  title       String
-  description String
-  imageUrl    String?  @map("image_url")
-  views       Int?
-  likes       Int?
-  dislikes    Int?
-  editedAt    DateTime @default(now())
+  id       String   @id @default(cuid())
+  postId   String   @map("post_id")
+  authorId String   @map("author_id")
+  title    String
+  content  String
+  imageUrl String?  @map("image_url")
+  views    Int      @default(0)
+  likes    Int      @default(0)
+  dislikes Int      @default(0)
+  editedAt DateTime @default(now())
 
-  post Post @relation(fields: [postId], references: [id])
-  user User @relation(fields: [authorId], references: [id])
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  @@map("post_history")
+  @@map("post_historys")
 }
 
 model PostInteractions {
   id        String          @id @default(cuid())
-  userId    String          @map("user_id")
+  authorId  String          @map("author_id")
   postId    String          @map("post_id")
   type      TypeInteraction @default(LIKE)
   viewed    Boolean
-  likes     Int?
-  dislikes  Int?
+  likes     Int             @default(0)
+  dislikes  Int             @default(0)
   createdAt DateTime        @default(now())
 
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user User @relation(fields: [userId], references: [id], onDelete: NoAction)
+  user User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, postId])
+  @@unique([authorId, postId])
+  @@map("post_interactions")
 }

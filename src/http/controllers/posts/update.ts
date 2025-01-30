@@ -12,7 +12,7 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 			.string()
 			.max(100, "O título deve ter no máximo 100 caracteres")
 			.min(6, "O título deve ter no mínimo 6 caracteres"),
-		description: z.string(),
+		content: z.string(),
 		imageUrl: z.string().default(""),
 		views: z.number().default(0),
 		likes: z.number().default(0),
@@ -20,8 +20,16 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 		userId: z.string().optional(),
 	});
 
-	const { id, title, description, imageUrl, views, likes, dislikes, userId } =
-		updateBodySchema.parse(request.body);
+	const {
+		id,
+		title,
+		content,
+		imageUrl,
+		views,
+		likes,
+		dislikes,
+		userId,
+	} = updateBodySchema.parse(request.body);
 
 	const post = await prisma.post.findUnique({
 		where: {
@@ -45,10 +53,10 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 		await updatePostUseCase.execute({
 			id,
 			title,
-			description,
+			content,
 			imageUrl,
-			likes,
 			views,
+			likes,
 			dislikes,
 			authorId: userId,
 		});

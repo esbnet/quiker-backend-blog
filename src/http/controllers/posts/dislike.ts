@@ -15,7 +15,7 @@ export async function dislikes(request: FastifyRequest, reply: FastifyReply) {
 			where: { id },
 			data: { dislikes: { increment: 1 } },
 		});
-		return reply.status(200).send("Dislike registrada com sucesso!");
+		return reply.status(200).send("Dislike removido com sucesso!");
 	} catch (error) {
 		return reply.status(400).send({ error: "Erro ao registrar dislike" });
 	}

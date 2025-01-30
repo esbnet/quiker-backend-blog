@@ -8,7 +8,7 @@ export class CreatePostUseCase {
 	async execute({
 		authorId,
 		title,
-		description,
+		content,
 		imageUrl,
 		views = 0,
 		likes = 0,
@@ -17,11 +17,11 @@ export class CreatePostUseCase {
 		const post = await this.postsRepository.createPost({
 			authorId,
 			title,
-			description,
+			content,
 			imageUrl,
 			views,
 			likes,
-			dislikes
+			dislikes,
 		});
 
 		return { post };
