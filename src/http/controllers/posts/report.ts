@@ -8,8 +8,8 @@ export async function report(request: FastifyRequest, reply: FastifyReply) {
 			id: true,
 			title: true,
 			views: true,
-			likesCount: true,
-			dislikesCount: true,
+			likes: true,
+			dislikes: true,
 		},
 	});
 	return reply.send(posts);

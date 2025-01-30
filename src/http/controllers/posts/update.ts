@@ -15,8 +15,8 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 		content: z.string(),
 		imageUrl: z.string().default(""),
 		views: z.number().default(0),
-		likesCount: z.number().default(0),
-		dislikesCount: z.number().default(0),
+		likes: z.number().default(0),
+		dislikes: z.number().default(0),
 		userId: z.string().optional(),
 	});
 
@@ -26,8 +26,8 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 		content,
 		imageUrl,
 		views,
-		likesCount,
-		dislikesCount,
+		likes,
+		dislikes,
 		userId,
 	} = updateBodySchema.parse(request.body);
 
@@ -56,8 +56,8 @@ export async function update(request: FastifyRequest, reply: FastifyReply) {
 			content,
 			imageUrl,
 			views,
-			likesCount,
-			dislikesCount,
+			likes,
+			dislikes,
 			authorId: userId,
 		});
 	} catch (error) {

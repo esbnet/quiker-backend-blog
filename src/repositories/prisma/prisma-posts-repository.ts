@@ -1,24 +1,27 @@
-import type { PostHistoryProps, PostProps } from "@/use-cases/post/post-types";
+import type { PostProps } from "@/use-cases/post/post-types";
 import type { Post, PostHistory } from "@prisma/client";
+
 
 import { prisma } from "@/lib/prisma";
 import type { PostsRepository } from "../posts-repository";
 
 export class PrismaPostsRepository implements PostsRepository {
-	async createPost(data: PostProps): Promise<Post> {
-		const post = await prisma.post.create({
-			data,
-		});
+	
+ async createPost(data: PostProps): Promise<Post> {
+     const post = await prisma.post.create({
+         data
+     });
 
-		return post;
-	}
+     return post;
+ }
 
-	async registerOnHirstory(data: PostHistoryProps): Promise<PostHistory> {
+	async registerOnHirstory(data: PostHistory): Promise<PostHistory> {
 		const postToHistory = {
+			id: data.id,
 			postId: data.postId,
 			authorId: data.authorId,
 			title: data.title,
-			description: data.description,
+			content: data.content,
 			imageUrl: data.imageUrl,
 			views: data.views,
 			likes: data.likes,
@@ -59,10 +62,10 @@ export class PrismaPostsRepository implements PostsRepository {
 			where: {
 				id: data.id,
 			},
-			data,
+			data
 		});
 
-		return ;
+		return post;
 	}
 
 	async findByUserId(postId: string) {

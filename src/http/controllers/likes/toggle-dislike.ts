@@ -38,26 +38,26 @@ export async function toggleDislike(request: FastifyRequest, reply: FastifyReply
 	}
 
 	try {
-		// if existe like, decrement on post likesCount
+		// if existe like, decrement on post likes
 		if(hasDislike?.like) {
 			await prisma.post.update({
 				where: { id: postId },
-				data: { likesCount: { decrement: 1 } },
+				data: { likes: { decrement: 1 } },
 			});	
 		}
 
-		// update dislikesCount for post on toggle dislike
+		// update dislikes for post on toggle dislike
 		if(dislike) {
 			await prisma.post.update({
 				where: { id: postId },
 				data: { 
-					dislikesCount: { increment: 1 } 
+					dislikes: { increment: 1 } 
 				},
 			});	
 		} else {
 			await prisma.post.update({
 				where: { id: postId },
-				data: { dislikesCount: { decrement: 1 } },
+				data: { dislikes: { decrement: 1 } },
 			});
 		}
 

@@ -7,22 +7,25 @@ import { z } from "zod";
 export async function deletePost(request: FastifyRequest, reply: FastifyReply) {
 	const registerBodySchema = z.object({
 		postId: z.string(),
-		authorId: z.string(),
+		postAuthorId: z.string(),
 	});
 
-	const { postId, authorId } = registerBodySchema.parse(request.body);
+	const { postId, postAuthorId } = registerBodySchema.parse(request.body);
 
 	const post = await prisma.post.findUnique({
 		where: {
 			id: postId,
+			authorId: postAuthorId
 		},
 	});
+
+	console.log("POST ==============>",post)
 
 	if (!post) {
 		return reply.status(404).send({ error: "Post not found" });
 	}
 
-	if (post.authorId !== authorId) {
+	if (post.authorId !== postAuthorId) {
 		return reply
 			.status(401)
 			.send({ error: "Apenas o autor pode deletar o post." });
@@ -30,7 +33,7 @@ export async function deletePost(request: FastifyRequest, reply: FastifyReply) {
 
 	try {
 		await prisma.post.delete({
-			where: { id: postId },
+			where: { id: postId, authorId: postAuthorId },
 		});
 	} catch (error) {
 		if (error instanceof PostNotFoundError) {

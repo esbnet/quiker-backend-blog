@@ -14,8 +14,8 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 		content: z.string(),
 		imageUrl: z.string(),
 		views: z.number().default(0),
-		likesCount: z.number().default(0),
-		dislikesCount: z.number().default(0),
+		likes: z.number().default(0),
+		dislikes: z.number().default(0),
 	});
 
 	const {
@@ -24,8 +24,8 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 		content,
 		imageUrl,
 		views = 0,
-		likesCount = 0,
-		dislikesCount = 0,
+		likes = 0,
+		dislikes = 0,
 	} = createBodySchema.parse(request.body);
 
 	try {
@@ -37,8 +37,8 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 			authorId,
 			imageUrl,
 			views,
-			likesCount,
-			dislikesCount,
+			likes,
+			dislikes,
 		});
 
 		return reply.status(201).send(post);

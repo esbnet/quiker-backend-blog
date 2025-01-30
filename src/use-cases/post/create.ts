@@ -11,8 +11,8 @@ export class CreatePostUseCase {
 		content,
 		imageUrl,
 		views = 0,
-		likesCount = 0,
-		dislikesCount = 0,
+		likes = 0,
+		dislikes = 0,
 	}: PostProps): Promise<PostCreateResponse> {
 		const post = await this.postsRepository.createPost({
 			authorId,
@@ -20,8 +20,8 @@ export class CreatePostUseCase {
 			content,
 			imageUrl,
 			views,
-			likesCount,
-			dislikesCount,
+			likes,
+			dislikes,
 		});
 
 		return { post };

@@ -1,11 +1,12 @@
 {
-  "name": "03-api-solid",
+  "name": "blog-api-solid",
   "version": "1.0.0",
-  "description": "GymPass style app.",
+  "description": "Blog API solid",
+  "author": "Edmilson Soares",
   "main": "index.js",
   "type": "commonjs",
   "scripts": {
-    "start:dev": "tsx watch src/server.ts ",
+    "start:dev": "tsx watch src/server.ts --trace-warnings ",
     "start": "node build/server.js",
     "test:create-prisma-environment": "npm link ./prisma/vitest-environment-prisma",
     "test:install-prisma-environment": "npm link vitest-environment-prisma",
@@ -21,7 +22,6 @@
     "seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
-  "author": "",
   "license": "ISC",
   "dependencies": {
     "@fastify/cookie": "9.0.4",
@@ -54,7 +54,7 @@
     "supertest": "6.3.3",
     "ts-node": "^10.9.2",
     "tsup": "7.2.0",
-    "tsx": "3.12.7",
+    "tsx": "4.19.2",
     "typescript": "5.1.6"
   }
 }

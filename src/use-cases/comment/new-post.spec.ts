@@ -18,7 +18,7 @@ describe("Register Use Case", () => {
 		);
 
 		const { comment } = await CommentsRepository.execute({
-			description:
+			content:
 				"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nisl vel",
 			authorId: "ef08a6ca-e8b4-4a45-bc34-9f810f9afec0",
 		});

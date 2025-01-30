@@ -8,10 +8,10 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 	const createBodySchema = z.object({
 		authorId: z.string(),
 		postId: z.string(),
-		description: z.string(),
+		content: z.string(),
 	});
 
-	const { authorId, postId, description } = createBodySchema.parse(
+	const { authorId, postId, content } = createBodySchema.parse(
 		request.body,
 	);
 
@@ -21,7 +21,7 @@ export async function create(request: FastifyRequest, reply: FastifyReply) {
 		const { comment } = await createUseCase.execute({
 			authorId,
 			postId,
-			description,
+			content,
 		});
 		return reply.status(201).send(comment);
 	} catch (error) {

@@ -8,12 +8,12 @@ export class CommentUseCase {
 	async execute({
 		authorId,
 		postId,
-		description,
+		content,
 	}: CommentProps): Promise<CommentCreateResponse> {
 		const comment = await this.commentsRepository.createComment({
 			authorId,
 			postId,
-			description,
+			content,
 		});
 
 		return { comment };

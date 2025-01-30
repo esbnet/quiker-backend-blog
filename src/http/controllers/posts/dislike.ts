@@ -13,7 +13,7 @@ export async function dislikes(request: FastifyRequest, reply: FastifyReply) {
 	try {
 		const post = await prisma.post.update({
 			where: { id },
-			data: { dislikesCount: { increment: 1 } },
+			data: { dislikes: { increment: 1 } },
 		});
 		return reply.status(200).send("Dislike removido com sucesso!");
 	} catch (error) {
