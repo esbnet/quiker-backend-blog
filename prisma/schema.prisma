@@ -63,8 +63,8 @@ model Like {
   dislike   Boolean  @default(false)
   createdAt DateTime @default(now()) @map("created_at")
 
-  user User @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 
   @@unique([authorId, postId])
   @@map("likes")
@@ -78,8 +78,8 @@ model Comment {
   removed   Boolean  @default(false)
   createdAt DateTime @default(now()) @map("created_at")
 
-  user User @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@map("comments")
 }
@@ -96,8 +96,8 @@ model PostHistory {
   dislikes Int      @default(0)
   editedAt DateTime @default(now())
 
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@map("post_historys")
 }
@@ -112,8 +112,8 @@ model PostInteractions {
   dislikes  Int             @default(0)
   createdAt DateTime        @default(now())
 
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-  user User @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  authot User @relation(fields: [authorId], references: [id], onDelete: Cascade)
 
   @@unique([authorId, postId])
   @@map("post_interactions")

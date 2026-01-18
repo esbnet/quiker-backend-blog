@@ -1,0 +1,41 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: blog-postgres
+    restart: always
+    environment:
+      POSTGRES_USER: docker
+      POSTGRES_PASSWORD: docker
+      POSTGRES_DB: apiquiker
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U docker"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build: .
+    container_name: blog-api
+    restart: always
+    ports:
+      - "3333:3333"
+    environment:
+      NODE_ENV: dev
+      PORT: 3333
+      DATABASE_URL: postgresql://docker:docker@postgres:5432/apiquiker?schema=public
+      JWT_SECRET: c5f0cf36-3917-419c-bc8b-3abe3b1989c4
+      JWT_EXPIRES_IN: 10m
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sh -c "npx prisma migrate deploy && npx prisma db seed && npm run start:dev"
+    volumes:
+      - ./src:/app/src
+      - ./prisma:/app/prisma
+
+volumes:
+  postgres_data:
